@@ -8,14 +8,14 @@ agent {
  environment {
 
    //## PESOAL ###
-   TASK_FAMILY="td-simplehttp"
-   SERVICE_NAME="service-simlehttp" 
-   CLUSTER_NAME="ecs-ec2"
+   //TASK_FAMILY="td-simplehttp"
+   //SERVICE_NAME="service-simlehttp" 
+   //CLUSTER_NAME="ecs-ec2"
 
    //### SANDBOX ###
-   //#TASK_FAMILY="td-showroom-nginx-bff"
-   //#SERVICE_NAME="srv-showroom-nginx-bff" 
-   //#CLUSTER_NAME="latam-ecs-sbx-cluster-ec2"
+   TASK_FAMILY="td-showroom-nginx-bff"
+   SERVICE_NAME="srv-showroom-nginx-bff" 
+   CLUSTER_NAME="latam-ecs-sbx-cluster-ec2"
 
  }
 

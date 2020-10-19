@@ -1,6 +1,6 @@
 {
     "family": "td-simplehttp",
-    "taskRoleArn": "arn:aws:iam::868622936337:role/ecsTaskExecutionRole",    
+    "taskRoleArn": "arn:aws:iam::ID_CONTA_AWS:role/ecsTaskExecutionRole",    
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
