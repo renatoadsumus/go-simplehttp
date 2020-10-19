@@ -1,0 +1,26 @@
+{
+    "family": "td-simplehttp",
+    "taskRoleArn": "arn:aws:iam::868622936337:role/ecsTaskExecutionRole",    
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "docker-simplehttp",
+            "image": "gkoenig/simplehttp:latest",            
+            "cpu": 256,
+            "memory": 512,
+            "memoryReservation": 256,            
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "protocol": "tcp"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "message",
+                    "value": "Latam"
+                }
+            ]
+		}],     
+    "pidMode": "task"
+}
