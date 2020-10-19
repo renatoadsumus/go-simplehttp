@@ -1,24 +1,18 @@
 {
-    "family": "td-simplehttp",
-    "taskRoleArn": "arn:aws:iam::868622936337:role/ecsTaskExecutionRole",    
+    "family": "td-showroom-nginx-bff",
+    "taskRoleArn": "arn:aws:iam::ID_CONTA_AWS:role/LatAmECSTaskExecution",  
     "networkMode": "awsvpc",
     "containerDefinitions": [
         {
             "name": "docker-simplehttp",
-            "image": "gkoenig/simplehttp:latest",            
+            "image": "nginx:latest",            
             "cpu": 256,
             "memory": 512,
             "memoryReservation": 256,            
             "portMappings": [
                 {
-                    "containerPort": 8000,
+                    "containerPort": 8080,                   
                     "protocol": "tcp"
-                }
-            ],
-            "environment": [
-                {
-                    "name": "message",
-                    "value": "Latam"
                 }
             ]
 		}],     
