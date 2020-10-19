@@ -1,7 +1,8 @@
 pipeline {  
- agent {
-l abel 'master'
- } 
+ 
+agent {
+   label 'master'
+} 
 
 
  environment {
