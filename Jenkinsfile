@@ -81,13 +81,16 @@ parameters {
        echo "###  Create New Task Definition and Deploy ECS ###"
        echo "##################################################"      
 	   
-	   if (env.GIT_LAST_COMMIT_MESSAGE == 'deploy') {	
+	   script {
+	   
+	        if (env.GIT_LAST_COMMIT_MESSAGE == 'deploy') {	
 	   	   
-	     sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' container-definitions.json """)  
+	           sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' container-definitions.json """)  
 	   
-	     sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
+	           sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
 	   
-	   }	   
+	        }
+      }		
     }
   }	
 
@@ -96,12 +99,15 @@ parameters {
   
     steps{
 	
-        if (env.GIT_LAST_COMMIT_MESSAGE == 'FORCE') {
+        script {
+		
+		    if (env.GIT_LAST_COMMIT_MESSAGE == 'FORCE') {
 	  
-	      sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region us-east-1 """)  
+	           sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region us-east-1 """)  
 	   
-	    }
-
+	        }
+        }
+		
        echo "##################################################"
        echo "###  Force Deploy Same Task Definition         ###"
        echo "##################################################"	  
