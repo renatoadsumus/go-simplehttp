@@ -61,25 +61,39 @@ pipeline {
     }
   }
 
-  stage('ECS - Create New Revision and Deploy '){		 
+  stage('ECS - Deploy New Task Definition'){	
+
+    when {
+	   anyOf {           
+           expression { return env.GIT_LAST_COMMIT_MESSAGE.contains("(deploy)") }
+        }
+    }
 
     steps{
 
-       echo "#####################################"
-       echo "###  Create New Revision  ###"
-       echo "#####################################"      
+       echo "##################################################"
+       echo "###  Create New Task Definition and Deploy ECS ###"
+       echo "##################################################"      
 	   
-	   sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' container-definitions.json """)
+	   sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' container-definitions.json """)  
 	   
-       //sh(""" aws ecs register-task-definition --cli-input-json file://container-definitions.json --region us-east-1 	""")
-       //sh(""" aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION """)
-       //sh (""" aws ecs update-service --cluster \"cluster-devops-latam\" --service \"home-service\" --force-new-deployment --region us-east-1 """)
-       //sh(""" ./register_task_definition.sh \"$TASK_FAMILY=\"${TASK_FAMILY} \"$SERVICE_NAME=\"${SERVICE_NAME} \"$CLUSTER_NAME=\"${CLUSTER_NAME} """)
+	   //sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
 	   
-//	   sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")
+    }
+  }	
 
-sh(""" ./register_task_definition.sh """)
-    }            
+  stage('ECS - Deploy Same Task Definition'){		 
+
+  
+    steps{
+	
+      //sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region us-east-1 """)  
+
+      echo "##################################################"
+      echo "###  Force Deploy Same Task Definition         ###"
+      echo "##################################################"	  
+	  
+    }	
   }	
 }
 
@@ -90,5 +104,3 @@ post {
    }
  }
 }
-
-
