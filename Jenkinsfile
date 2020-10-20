@@ -68,7 +68,7 @@ parameters {
 
   stage('ECS - Deploy New Task Definition'){	
 
-    /when {
+    /*when {
 	   anyOf {
            environment name: 'gitlabSourceBranch', value: 'master';
            expression { return env.GIT_LAST_COMMIT_MESSAGE.contains("(deploy)") }
