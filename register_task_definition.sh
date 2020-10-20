@@ -3,7 +3,7 @@
 set -e
 
 
-export TASK_VERSION=$(aws ecs register-task-definition --region us-east-1 --cli-input-json file://container-definitions.yml | jq --raw-output '.taskDefinition.revision')
+export TASK_VERSION=$(aws ecs register-task-definition --region us-east-1 --cli-input-json file://container-definitions.json | jq --raw-output '.taskDefinition.revision')
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
