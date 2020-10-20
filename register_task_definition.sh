@@ -11,6 +11,8 @@ export SERVICE_PARA_CLUSTER=$(aws ecs list-services --region us-east-1 --cluster
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
+sleep 5
+
 if [[ "$SERVICE_PARA_CLUSTER" != " [] " ]]
 then
 	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
