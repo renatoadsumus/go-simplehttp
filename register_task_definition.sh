@@ -7,13 +7,14 @@ export TASK_VERSION=$(aws ecs register-task-definition --region us-east-1 --cli-
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
-export EXISTE_SERVICE_PARA_CLUSTER =$(aws ecs list-services --cluster $CLUSTER_NAME| jq --raw-output '.serviceArns')
+export SERVICE_PARA_CLUSTER=$(aws ecs list-services --region us-east-1 --cluster $CLUSTER_NAME| jq --raw-output '.serviceArns')
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
-if [[ "$EXISTE_SERVICE_PARA_CLUSTER" != " [] " ]]
+if [[ "$SERVICE_PARA_CLUSTER" != " [] " ]]
 then
 	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
+	echo "Service Before Created: " $SERVICE_PARA_CLUSTER 
 	echo "Created Service: " $SERVICE_NAME 
 	
 else
