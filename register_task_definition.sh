@@ -14,13 +14,13 @@ echo "Registered ECS Task Definition: " $TASK_VERSION
 sleep 5
 
 if [[ "$SERVICE_PARA_CLUSTER" != " [] " ]]
-then
-	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
-	echo "Service Before Created: " $SERVICE_PARA_CLUSTER 
-	echo "Created Service: " $SERVICE_NAME 
-	
-else
-	DEPLOYED_SERVICE=$(aws ecs update-service --region us-east-1 --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION | jq --raw-output '.service.serviceName')
+then		
 	echo "Service Already Existing: " $SERVICE_NAME 
 	echo "Deployment of $DEPLOYED_SERVICE complete"
+	DEPLOYED_SERVICE=$(aws ecs update-service --region us-east-1 --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION | jq --raw-output '.service.serviceName')
+	
+else    
+    echo "All Services Existing: " $SERVICE_PARA_CLUSTER 
+	echo "New Created Service: " $SERVICE_NAME 	
+	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
 fi
