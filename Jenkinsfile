@@ -76,7 +76,9 @@ pipeline {
        //sh (""" aws ecs update-service --cluster \"cluster-devops-latam\" --service \"home-service\" --force-new-deployment --region us-east-1 """)
        //sh(""" ./register_task_definition.sh \"$TASK_FAMILY=\"${TASK_FAMILY} \"$SERVICE_NAME=\"${SERVICE_NAME} \"$CLUSTER_NAME=\"${CLUSTER_NAME} """)
 	   
-	   sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")
+//	   sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")
+
+sh(""" ./register_task_definition.sh """)
     }            
   }	
 }
