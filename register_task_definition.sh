@@ -7,11 +7,17 @@ export TASK_VERSION=$(aws ecs register-task-definition --region us-east-1 --cli-
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
+export EXISTE_SERVICE_PARA_CLUSTER =$(aws ecs list-services --cluster $CLUSTER_NAME| jq --raw-output '.serviceArns')
 
-if [ ! -n "$CLUSTER_NAME" ]
+echo "Registered ECS Task Definition: " $TASK_VERSION
+
+if [[ "$EXISTE_SERVICE_PARA_CLUSTER" != " [] " ]]
 then
-	DEPLOYED_SERVICE=$(aws ecs update-service --region us-east-1 --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION | jq --raw-output '.service.serviceName')
-	echo "Deployment of $DEPLOYED_SERVICE complete"
+	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
+	echo "Created Service: " $SERVICE_NAME 
+	
 else
-	echo "SO FOI CRIADO A TASK DEFINITION"
+	DEPLOYED_SERVICE=$(aws ecs update-service --region us-east-1 --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION | jq --raw-output '.service.serviceName')
+	echo "Service Already Existing: " $SERVICE_NAME 
+	echo "Deployment of $DEPLOYED_SERVICE complete"
 fi

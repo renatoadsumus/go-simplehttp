@@ -1,0 +1,33 @@
+{
+    "cluster": "latam-ecs-sbx-cluster-ec2",
+    "serviceName": "srv-showroom-nginx-bff",
+    "taskDefinition": "td-showroom-nginx-bff:1",
+    "desiredCount": 2,
+    "schedulingStrategy": "DAEMON",
+    "launchType": "EC2",      
+    "deploymentConfiguration": {
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 50
+    },
+    "placementStrategy": [
+        {
+            "type": "spread",
+            "field": "attribute:ecs.availability-zone"
+        }
+    ],
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                "subnet-032fd4715835471f5"
+            ],
+            "securityGroups": [
+                "sg-0685ec86a00a1c4d4"
+            ],
+            "assignPublicIp": "DISABLED"
+        }
+    },    
+    "schedulingStrategy": "REPLICA",
+    "deploymentController": {
+        "type": "ECS"
+    }
+}
