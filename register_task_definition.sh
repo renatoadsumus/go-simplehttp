@@ -11,12 +11,12 @@ export SERVICE_PARA_CLUSTER=$(aws ecs list-services --region us-east-1 --cluster
 
 echo "Registered ECS Task Definition: " $TASK_VERSION
 
-sleep 5
+sleep 3
 
 if [[ "$SERVICE_PARA_CLUSTER" == "[]" ]]
 then	 
 	echo "New Created Service: " $SERVICE_NAME 	
-	sed -i 's/TD_VERSION/${TASK_VERSION}/' servive-definitions.json
+	sed -i 's/TD_VERSION/$TASK_VERSION/' servive-definitions.json
 	sleep 10
 	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json	
 else    
