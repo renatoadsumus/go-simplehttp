@@ -1,7 +1,7 @@
 {
     "cluster": "latam-ecs-sbx-cluster-ec2",
     "serviceName": "srv-showroom-nginx-bff",
-    "taskDefinition": "td-showroom-nginx-bff:TD_VERSION",
+    "taskDefinition": "td-showroom-nginx-bff:TASK_VERSION",
     "desiredCount": 2,
     "schedulingStrategy": "DAEMON",
     "launchType": "EC2",      
