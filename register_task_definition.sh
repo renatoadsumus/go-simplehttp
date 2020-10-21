@@ -20,7 +20,8 @@ then
 	DEPLOYED_SERVICE=$(aws ecs update-service --region us-east-1 --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $TASK_FAMILY:$TASK_VERSION | jq --raw-output '.service.serviceName')
 	
 else    
-    echo "All Services Existing: " $SERVICE_PARA_CLUSTER 
+        sed -i 's/TD_VERSION/$TASK_VERSION/' servive-definitions.json
+        echo "All Services Existing: " $SERVICE_PARA_CLUSTER 
 	echo "New Created Service: " $SERVICE_NAME 	
 	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
 fi

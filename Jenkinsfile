@@ -75,26 +75,25 @@ parameters {
         }
     }*/
 
-    steps{
-
-       echo "##################################################"
-       echo "###  Create New Task Definition and Deploy ECS ###"
-       echo "##################################################"      
+    steps{            
 	   
 	   script {
 	   
 	        if (env.GIT_LAST_COMMIT_MESSAGE == 'deploy') {	
-	   	   
-			   echo "############ BEFORE SCRIPT #######################"
-			   sh(""" aws ecs list-task-definitions --region us-east-1 """) 
-			   echo "##################################################"			   
+			
+			   echo "##################################################"
+               echo "###  Create New Task Definition and Deploy ECS ###"
+               echo "##################################################"   
+						   
 			   
 	           sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' container-definitions.json """)  
 	   
 	           sh(""" ./register_task_definition.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
 	   
 	        }
-      }		
+        }
+
+		sh(""" aws ecs list-task-definitions --region us-east-1 """) 	
     }
   }	
 
@@ -109,14 +108,12 @@ parameters {
 	  
 	           sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region us-east-1 """)  
 			   
-			   echo "############ FORCE DEPLOY #######################"			  
+			   echo "##################################################"
+               echo "###  Force Deploy Same Task Definition         ###"
+               echo "##################################################"
 	   
 	        }
-        }
-		
-       echo "##################################################"
-       echo "###  Force Deploy Same Task Definition         ###"
-       echo "##################################################"	  
+        }       	  
 	  
 	   sh(""" aws ecs list-task-definitions --region us-east-1 """) 	  
     }	
