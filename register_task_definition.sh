@@ -22,6 +22,7 @@ then
 else    
         sed -i 's/TD_VERSION/$TASK_VERSION/' servive-definitions.json
         echo "All Services Existing: " $SERVICE_PARA_CLUSTER 
-	echo "New Created Service: " $SERVICE_NAME 	
+	echo "New Created Service: " $SERVICE_NAME 
+        sleep 15	
 	aws ecs create-service --region us-east-1 --cli-input-json file://servive-definitions.json
 fi
