@@ -1,0 +1,20 @@
+{
+    "family": "td-showroom-nginx-bff",
+    "taskRoleArn": "arn:aws:iam::ID_CONTA_AWS:role/LatAmECSTaskExecution",  
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "docker-simplehttp",
+            "image": "nginx:latest",            
+            "cpu": 256,
+            "memory": 512,
+            "memoryReservation": 256,            
+            "portMappings": [
+                {
+                    "containerPort": 8080,                   
+                    "protocol": "tcp"
+                }
+            ]
+		}],     
+    "pidMode": "task"
+}

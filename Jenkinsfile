@@ -17,7 +17,7 @@ pipeline {
 
 parameters {
 		
-    string(defaultValue: "deploy", description: 'Informar a palavra deploy para Criar New Revision ou force para New Force Deploy', name: 'GIT_LAST_COMMIT_MESSAGE')    
+    string(defaultValue: "newrevision", description: 'Informar a palavra deploy para Criar New Revision ou force para New Force Deploy', name: 'GIT_LAST_COMMIT_MESSAGE')    
 	
 }
 
@@ -67,7 +67,7 @@ parameters {
     /*when {
 	   anyOf {
            environment name: 'gitlabSourceBranch', value: 'master';
-           expression { return env.GIT_LAST_COMMIT_MESSAGE.contains("(deploy)") }
+           expression { return env.GIT_LAST_COMMIT_MESSAGE.contains("(newrevision)") }
         }
     }*/
 
@@ -75,7 +75,7 @@ parameters {
 	   
 	   script {
 	   
-	        if (env.GIT_LAST_COMMIT_MESSAGE == 'deploy') {	
+	        if (env.GIT_LAST_COMMIT_MESSAGE == 'newrevision') {	
 			
 			   echo "##################################################"
                echo "###  Create New Task Definition and Deploy ECS ###"
@@ -100,7 +100,7 @@ parameters {
 	
         script {
 		
-		    if (env.GIT_LAST_COMMIT_MESSAGE != 'deploy') {
+		    if (env.GIT_LAST_COMMIT_MESSAGE != 'newrevision') {
 	  
 	           sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region ${CLUSTER_REGION} """)  
 			   
