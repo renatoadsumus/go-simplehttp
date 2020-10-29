@@ -14,11 +14,6 @@ pipeline {
 
  }
 
-parameters {
-		
-    string(defaultValue: "newrevision", description: 'Informar a palavra deploy para Criar New Revision ou force para New Force Deploy', name: 'GIT_LAST_COMMIT_MESSAGE')    
-	
-}
 
   stages {
     stage('Unit Test'){
