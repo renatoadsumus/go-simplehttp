@@ -4,7 +4,6 @@ pipeline {
    label 'master'
  } 
 
-
  environment { 
 
    //### SANDBOX ###
@@ -62,58 +61,23 @@ parameters {
     }
   }
 
-  stage('ECS - Deploy New Task Definition'){	
+  stage('ECS - Deploy'){	  
 
-    /*when {
-	   anyOf {
-           environment name: 'gitlabSourceBranch', value: 'master';
-           expression { return env.GIT_LAST_COMMIT_MESSAGE.contains("(newrevision)") }
-        }
-    }*/
-
-    steps{            
-	   
-	   script {
-	   
-	        if (env.GIT_LAST_COMMIT_MESSAGE == 'newrevision') {	
+    steps{ 
 			
-			   echo "##################################################"
-               echo "###  Create New Task Definition and Deploy ECS ###"
-               echo "##################################################"   
-						   
-			   
-	           sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' task-definition.json """)  
-	   
-	           sh(""" ./deploy_ecs_ec2.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
-	   
-	        }
-        }
+       echo "##################################################"
+       echo "###  Create New Task Definition and Deploy ECS ###"
+       echo "##################################################"   
+                   
+       
+       sh(""" sed -i 's/ID_CONTA_AWS/${env.ID_CONTA_AWS}/' task-definition.json """)  
 
-		sh(""" aws ecs list-task-definitions --region ${CLUSTER_REGION} """) 	
-    }
-  }	
+       sh(""" ./deploy_ecs_ec2.sh ${CLUSTER_NAME} ${SERVICE_NAME} ${TASK_FAMILY}""")	   
 
-  stage('ECS - Deploy Same Task Definition'){		 
 
-  
-    steps{
-	
-        script {
-		
-		    if (env.GIT_LAST_COMMIT_MESSAGE != 'newrevision') {
-	  
-	           sh(""" aws ecs update-service --cluster \"${CLUSTER_NAME}\" --service \"${SERVICE_NAME}\" --force-new-deployment --region ${CLUSTER_REGION} """)  
-			   
-			   echo "##################################################"
-               echo "###  Force Deploy Same Task Definition         ###"
-               echo "##################################################"
-	   
-	        }
-        }       	  
-	  
-	   sh(""" aws ecs list-task-definitions --region ${CLUSTER_REGION} """) 	  
-    }	
-  }	
+       sh(""" aws ecs list-task-definitions --region ${CLUSTER_REGION} """) 	
+     }
+  }		
 }
 
 post {
